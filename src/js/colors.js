@@ -10,6 +10,7 @@ const colors = [
 const startColorChangeBtn = document.querySelector(
   'button[data-action="start"]',
 );
+
 const stopColorChangeBtn = document.querySelector('button[data-action="stop"]');
 
 const randomIntegerFromInterval = (min, max) => {
@@ -17,21 +18,19 @@ const randomIntegerFromInterval = (min, max) => {
 };
 
 const changer = {
-  isActive: false,
   onColorChange() {
-    if (this.isActive) {
-      return;
-    }
-    this.isActive = true;
+    startColorChangeBtn.disabled = true;
+    stopColorChangeBtn.disabled = false;
+
     this.intervalId = setInterval(() => {
-      const i = randomIntegerFromInterval(0, colors.length);
+      const i = randomIntegerFromInterval(0, colors.length - 1);
       document.body.style.backgroundColor = colors[i];
     }, 1000);
   },
   onStopColorChange() {
     clearInterval(this.intervalId);
-    this.isActive = false;
-    document.body.style.backgroundColor = colors[0];
+    startColorChangeBtn.disabled = false;
+    stopColorChangeBtn.disabled = true;
   },
 };
 
